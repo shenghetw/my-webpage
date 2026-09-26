@@ -58,6 +58,33 @@
     }
     button:hover { opacity: 0.9; }
     #count { font-weight: 600; margin-left: 12px; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: zoom-in;
+      display: block;
+      background: var(--border);
+    }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      cursor: zoom-out;
+    }
+    .lightbox[hidden] { display: none; }
+    .lightbox img { max-width: 100%; max-height: 100%; border-radius: 8px; }
     footer { color: var(--muted); font-size: 0.9rem; padding-top: 32px; padding-bottom: 48px; }
   </style>
 </head>
@@ -78,7 +105,16 @@
       <button id="btn">點我</button>
       <span id="count">已點擊 0 次</span>
     </section>
+
+    <section class="card">
+      <h2>相簿</h2>
+      <div class="gallery" id="gallery"></div>
+    </section>
   </main>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <img id="lightbox-img" alt="">
+  </div>
 
   <footer>
     © <span id="year"></span> 我的網頁
@@ -91,6 +127,38 @@
       document.getElementById('count').textContent = `已點擊 ${clicks} 次`;
     });
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const photos = [
+      'DF85DC81-DE0B-4D60-9F1C-4B9CFFBE41A7_4_5005_c.jpeg',
+      'D9854503-AE61-442A-AC73-40313DC9FAF1_4_5005_c.jpeg',
+      '27CFDEE1-7702-457A-B01B-FA2167C8FA24_4_5005_c.jpeg',
+      '6AFAFA0D-1F48-4595-AC90-513FB29DD0A9_4_5005_c.jpeg',
+      '48D981C9-821D-4089-AD7B-B60A5E1DA929_4_5005_c.jpeg',
+      'F13D531C-728D-4283-AFA2-9CF7F87D0837_4_5005_c.jpeg',
+      'F99A1EA4-16BF-4A69-A775-E0B074CE8144_4_5005_c.jpeg',
+      'EFD1C2E6-434A-40BA-A423-B286AA1AF94C_4_5005_c.jpeg',
+      'A16A9F1F-F754-41F8-9705-2A41C4DD006C_4_5005_c.jpeg',
+      '594B9DBF-0667-4F47-BE1F-5ED1481CE3E4_4_5005_c.jpeg',
+    ];
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    photos.forEach((name, i) => {
+      const img = document.createElement('img');
+      img.src = `assests/${name}`;
+      img.alt = `相片 ${i + 1}`;
+      img.loading = 'lazy';
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.hidden = false;
+      });
+      gallery.appendChild(img);
+    });
+    lightbox.addEventListener('click', () => { lightbox.hidden = true; });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') lightbox.hidden = true;
+    });
   </script>
 </body>
 </html>
