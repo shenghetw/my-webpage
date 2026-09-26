@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的網頁</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --fg: #1f2328;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16181c;
+        --fg: #e6e8eb;
+        --muted: #9aa1ab;
+        --accent: #60a5fa;
+        --card: #1f2227;
+        --border: #2d3139;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    header, main, footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    header { padding-top: 64px; padding-bottom: 32px; }
+    h1 { font-size: 2.2rem; margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card h2 { margin: 0 0 8px; font-size: 1.2rem; }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+    #count { font-weight: 600; margin-left: 12px; }
+    footer { color: var(--muted); font-size: 0.9rem; padding-top: 32px; padding-bottom: 48px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>哈囉，歡迎光臨 👋</h1>
+    <p class="subtitle">這是一個簡單的網頁範例。</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>關於</h2>
+      <p>你可以在這裡介紹自己、你的專案，或任何想分享的內容。</p>
+    </section>
+
+    <section class="card">
+      <h2>小互動</h2>
+      <button id="btn">點我</button>
+      <span id="count">已點擊 0 次</span>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> 我的網頁
+  </footer>
+
+  <script>
+    let clicks = 0;
+    document.getElementById('btn').addEventListener('click', () => {
+      clicks++;
+      document.getElementById('count').textContent = `已點擊 ${clicks} 次`;
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
